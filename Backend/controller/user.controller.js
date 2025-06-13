@@ -25,6 +25,7 @@ const registerUser = async (req, res, next) => {
     });
 
     const token = user.authToken();
+    res.cookie('token',token);
     res.status(201).json({ token, user });
 };
 
@@ -47,7 +48,12 @@ const loginUser = async (req, res) => {
     }
 
     const token = user.authToken(); 
+    res.cookie('token',token);
     res.status(200).json({ token, user });
 };
 
-module.exports = { registerUser, loginUser };
+const getUserProfile=async(req,res,next)=>{
+  
+    res.status(200).json(req.user);
+}
+module.exports = { registerUser, loginUser, getUserProfile };
